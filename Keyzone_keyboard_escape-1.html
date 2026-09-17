@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Keyboard Escape — Keyzone</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#07111f;color:#eef6ff}
+button{border:0;border-radius:12px;padding:11px 15px;background:#153454;color:#fff;cursor:pointer;font-weight:700}
+button:hover{background:#1e4a78}.app{display:flex;min-height:100vh}.side{width:235px;background:#0a1728;padding:18px;position:sticky;top:0;height:100vh}
+.logo{font-size:23px;font-weight:900;margin-bottom:20px;color:#55b8ff}.nav button{display:block;width:100%;margin:7px 0;text-align:right}
+.main{flex:1;padding:22px;max-width:1250px;margin:auto}.top{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.stats{display:flex;gap:9px;flex-wrap:wrap}.stat{background:#0d2036;border:1px solid #193958;padding:10px 13px;border-radius:12px}
+.hero{margin:20px 0;padding:25px;border-radius:20px;background:linear-gradient(135deg,#102e4c,#10203a);border:1px solid #235277}
+.hero h1{margin:0 0 8px;font-size:32px}.xp{height:12px;background:#07101d;border-radius:20px;overflow:hidden;margin:12px 0}.xp i{display:block;height:100%;width:62%;background:#42b6ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:13px}.card{background:#0d1d30;border:1px solid #193651;border-radius:16px;padding:16px}.icon{font-size:35px}.muted{color:#91a8bd}.price{color:#ffd85a;font-weight:800}.hidden{display:none}
+.section{margin-top:20px}.section h2{margin-bottom:12px}.item{display:flex;align-items:center;gap:12px}.item .grow{flex:1}
+.badge{display:inline-block;background:#183b5c;border-radius:99px;padding:5px 9px;font-size:12px}
+table{width:100%;border-collapse:collapse;background:#0d1d30;border-radius:14px;overflow:hidden}th,td{padding:12px;border-bottom:1px solid #1a334b;text-align:right}
+@media(max-width:700px){.app{display:block}.side{width:100%;height:auto;position:relative}.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.nav button{margin:0;text-align:center;padding:9px 4px;font-size:12px}.main{padding:13px}.hero h1{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="logo">⌨️ KEYZONE</div>
+<div class="muted">Keyboard Escape</div>
+<div class="nav">
+<button onclick="show('home')">🏠 الرئيسية</button>
+<button onclick="show('inventory')">🎒 Inventory</button>
+<button onclick="show('items')">🧩 Items</button>
+<button onclick="show('aura')">✨ Auras</button>
+<button onclick="show('trail')">🛤️ Trails</button>
+<button onclick="show('merge')">🔀 Merge</button>
+<button onclick="show('tread')">🏃 Treadmills</button>
+<button onclick="show('shop')">🛒 Shop</button>
+<button onclick="show('quests')">🎯 Quests</button>
+<button onclick="show('pets')">🥚 Pets</button>
+<button onclick="show('leader')">🏆 Leaderboard</button>
+<button onclick="show('zones')">🗺️ Zones</button>
+<button onclick="show('settings')">⚙️ Settings</button>
+</div>
+</aside>
+<main class="main">
+<div class="top"><h2 id="title">Keyboard Escape</h2><div class="stats">
+<div class="stat">💰 <span id="coins">2,500</span></div><div class="stat">💎 <span id="gems">125</span></div><div class="stat">⭐ Lv.<span id="level">12</span></div>
+</div></div>
+
+<section id="home" class="page">
+<div class="hero"><h1>Keyboard Escape ⌨️</h1><p class="muted">اجمع السرعة، افتح المناطق، طوّر الـAuras والـTrails واصنع أقوى الـItems.</p>
+<div>Level 12 • XP 620 / 1000</div><div class="xp"><i></i></div><button onclick="train()">🏃 ابدأ التدريب</button></div>
+<div class="section"><h2>⚡ اختصارات سريعة</h2><div class="grid">
+<div class="card"><div class="icon">🎒</div><h3>Inventory</h3><p class="muted">إدارة كل أغراضك.</p><button onclick="show('inventory')">فتح</button></div>
+<div class="card"><div class="icon">✨</div><h3>Aura</h3><p class="muted">جهّز تأثيرك الخاص.</p><button onclick="show('aura')">فتح</button></div>
+<div class="card"><div class="icon">🔀</div><h3>Merge</h3><p class="muted">ادمج العناصر وطورها.</p><button onclick="show('merge')">فتح</button></div>
+<div class="card"><div class="icon">🏃</div><h3>Treadmills</h3><p class="muted">ارفع Speed وXP.</p><button onclick="show('tread')">تدريب</button></div>
+</div></div>
+</section>
+
+<section id="inventory" class="page hidden"><h2>🎒 Inventory</h2><div class="grid" id="inventoryGrid"></div></section>
+<section id="items" class="page hidden"><h2>🧩 Items</h2><div class="grid" id="itemsGrid"></div></section>
+<section id="aura" class="page hidden"><h2>✨ Auras</h2><div class="grid" id="auraGrid"></div></section>
+<section id="trail" class="page hidden"><h2>🛤️ Trails</h2><div class="grid" id="trailGrid"></div></section>
+<section id="merge" class="page hidden"><h2>🔀 Merge Station</h2><div class="card"><p>ادمج 3 عناصر من نفس النوع لتحصل على نسخة أقوى.</p><button onclick="merge()">🔀 Merge ×3</button><p id="mergeMsg" class="muted"></p></div></section>
+<section id="tread" class="page hidden"><h2>🏃 Treadmills</h2><div class="grid" id="treadGrid"></div></section>
+<section id="shop" class="page hidden"><h2>🛒 Shop</h2><div class="grid" id="shopGrid"></div></section>
+<section id="quests" class="page hidden"><h2>🎯 Quests</h2><div class="grid" id="questGrid"></div></section>
+<section id="pets" class="page hidden"><h2>🥚 Pets & Eggs</h2><div class="grid" id="petGrid"></div></section>
+<section id="leader" class="page hidden"><h2>🏆 Leaderboard</h2><table><thead><tr><th>#</th><th>Player</th><th>Speed</th><th>Level</th></tr></thead><tbody>
+<tr><td>1</td><td>KeyboardKing</td><td>98,420</td><td>87</td></tr><tr><td>2</td><td>SpeedMaster</td><td>76,210</td><td>74</td></tr><tr><td>3</td><td>KeyzonePro</td><td>62,900</td><td>68</td></tr><tr><td>4</td><td>You</td><td>12,540</td><td>12</td></tr></tbody></table></section>
+<section id="zones" class="page hidden"><h2>🗺️ Zones</h2><div class="grid" id="zoneGrid"></div></section>
+<section id="settings" class="page hidden"><h2>⚙️ Settings</h2><div class="card"><h3>إعدادات اللعبة</h3><p>🔊 Sound <button onclick="toggle(this)">ON</button></p><p>🌙 Dark Mode <button onclick="toggle(this)">ON</button></p><button onclick="resetGame()">♻️ Reset Demo</button></div></section>
+</main></div>
+<script>
+const data={
+inventory:[['⌨️','Starter Keyboard','Common'],['⚡','Speed Key','Rare'],['🔑','Golden Key','Epic'],['💠','Crystal Key','Legendary']],
+items:[['🪙','Coin Booster','+25% Coins'],['⚡','Speed Core','+100 Speed'],['💎','Gem Pack','+50 Gems'],['🎟️','XP Ticket','+250 XP']],
+aura:[['🔵','Blue Pulse','500 💎'],['🔥','Inferno','1,500 💎'],['🌌','Galaxy','5,000 💎'],['🌈','Rainbow','10,000 💎']],
+trail:[['💨','Wind Trail','300 💎'],['⚡','Lightning Trail','1,000 💎'],['🔥','Flame Trail','2,500 💎'],['🌠','Star Trail','5,000 💎']],
+tread:[['🟢','Basic Treadmill','+5 Speed / tap'],['🔵','Pro Treadmill','+15 Speed / tap'],['🟣','Hyper Treadmill','+40 Speed / tap'],['🟡','Galaxy Treadmill','+100 Speed / tap']],
+shop:[['🎁','Daily Crate','250 💰'],['✨','Random Aura','750 💰'],['🛤️','Random Trail','600 💰'],['🥚','Mystery Egg','1,000 💰']],
+quests:[['🏃','Run 1000 steps','0 / 1000 • 500 💰'],['⌨️','Use a treadmill 20 times','0 / 20 • 750 XP'],['🎒','Collect 5 items','2 / 5 • 1,000 💰'],['🔀','Merge an item','0 / 1 • 25 💎']],
+pets:[['🥚','Keyboard Egg','Common → Legendary'],['🥚','Speed Egg','Rare → Mythic'],['🐱','Key Cat','x1.5 Speed'],['🐉','Dragon Keyboard','x5 Speed']],
+zones:[['🌱','Starter Zone','OPEN'],['🏙️','City Zone','Lv. 10'],['🌋','Lava Zone','Lv. 25'],['🌌','Cyber Zone','Lv. 50'],['👑','Keyboard Castle','Lv. 100']]
+};
+function cards(id){document.getElementById(id+'Grid').innerHTML=data[id].map(x=>`<div class="card"><div class="icon">${x[0]}</div><h3>${x[1]}</h3><p class="muted">${x[2]}</p><button onclick="buy('${x[1]}')">${id==='inventory'?'تجهيز':id==='zones'?(x[2]==='OPEN'?'دخول':'🔒 مقفل'):'شراء'}</button></div>`).join('')}
+Object.keys(data).forEach(cards);
+function show(id){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.getElementById('title').textContent=document.getElementById(id).querySelector('h2')?.textContent||'Keyboard Escape'}
+function buy(name){alert('تم اختيار: '+name+' 🎉')}
+function train(){let c=+document.getElementById('coins').textContent.replace(',','')+100;document.getElementById('coins').textContent=c.toLocaleString();alert('+100 Coins و +25 XP!')}
+function merge(){document.getElementById('mergeMsg').textContent='تم الدمج بنجاح! حصلت على Item مطوّر 🔥'}
+function toggle(b){b.textContent=b.textContent==='ON'?'OFF':'ON'}
+function resetGame(){document.getElementById('coins').textContent='2,500';document.getElementById('gems').textContent='125';alert('تمت إعادة بيانات العرض.')}
+</script>
+</body>
+</html>
